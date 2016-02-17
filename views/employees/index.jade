@@ -5,22 +5,23 @@ block content
   h1 Employees
   if logged_in
     p you have access to employees now
-  if employees
+  if people
     table.table.table-pattern
      thead
        tr
-         th Employees id
-         th Employee Name
-         th TEAMS
+         th ID
+         th Name
+         th Team
          th
      tbody
        for person in people
          tr
-           td link to edit
+           td
+             a(href='/employees/employee.id/edit') employee.id
            td= person.name
-           td= person.teams 
-           td link to delete
-
+           td= person.teams
+           td
+            a(href='/employees/employee.id/delete') delete
 
    div
    a(href='/employees/new') Add a new employee
