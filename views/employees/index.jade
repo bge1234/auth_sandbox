@@ -5,23 +5,23 @@ block content
   h1 Employees
   if logged_in
     p you have access to employees now
-  if employees
+  if people
     table.table.table-pattern
      thead
        tr
-         th Employees id
-         th Employee Name
-         th Group
+         th ID
+         th Name
+         th Team
          th
      tbody
-       for employee in employees
+       for person in people
          tr
            td
-             a(href='/employees/#{employee.id}/edit') #{employee.id}
-           td= employee.name
-           td= group
+             a(href='/employees/employee.id/edit') employee.id
+           td= person.name
+           td= person.teams
            td
-            a(href='/employees/#{employee.id}/delete') delete
+            a(href='/employees/employee.id/delete') delete
 
 
    div

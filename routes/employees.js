@@ -7,9 +7,35 @@ function Employees() {
 }
 
 router.get('/', function(req, res, next) {
-    console.log("reached employees");
-    Employees().select().then(function (employees) {
-      res.render('employees/index', {employees: employees});
+    knex.raw('select employees.name, teams.team_name from employees join assignments on employees.id = assignments.employee_id  join teams on assignments.team_id = teams.id').then(function (employees) {
+      employees = employees.rows;
+
+      var people = [];
+
+      employees.forEach(function(employee) {
+        var in_array = people.filter(function(person) {
+          return person.name === employee.name;
+        });
+
+        if(in_array.length === 0) {
+          var team_array = [];
+          team_array.push(employee.team_name);
+
+          people.push({
+            name: employee.name,
+            teams: team_array
+          });
+        }
+        else {
+          people.forEach(function(person){
+            if(person.name === employee.name) {
+              person.teams.push(employee.team_name);
+            };
+          });
+        }
+      });
+
+      res.render('employees/index', {people: people});
     });
 });
 
